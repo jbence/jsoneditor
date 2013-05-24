@@ -6,17 +6,33 @@
     
     <script>
       // Setup control buttons at bottom.
+
+      var jsonEditor;
       
       $(document).ready(function(){
         JSONEditor.prototype.ADD_IMG = 'jsoneditor/add.png';
         JSONEditor.prototype.DELETE_IMG = 'jsoneditor/delete.png';
-        var j = new JSONEditor($("#t"), 400, 400);
-        j.doTruncation(true);
-        j.showFunctionButtons();
+        JSONEditor.prototype.SHIM_IMG = 'jsoneditor/shim.png';
+        jsonEditor = new JSONEditor($("#t"), 400, 400);
+        jsonEditor.doTruncation(true);
+        jsonEditor.showFunctionButtons(true);
       });
+
+      function wipeOnOff() {
+        jsonEditor.showWipe($('#wipe').is(':checked'));
+        jsonEditor.showBuilder();
+      }
+
+      function editOnOff() {
+        jsonEditor.doRestrictedEditing($('#editing').is(':checked'));
+        jsonEditor.showBuilder();
+      }
     </script>
   </head>
   <body>
+<input type="checkbox" id="editing" onchange="editOnOff();"/> Restricted Editing
+&nbsp;
+<input type="checkbox" id="wipe" onchange="wipeOnOff();"/> Show wipe control
 <textarea id="t">{
   "names": ["andy", "ben", "sam"],
   "some_object": {
